@@ -1,0 +1,30 @@
+.taskList {
+}
+
+.task {
+    display: flex;
+    flex-direction: row;
+    padding: 15px 20px;
+    gap: 10px;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    width: 100%;
+    align-items: center;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+}
+
+.input-container input {
+    width: 30%;
+    border: 1px solid black;
+    padding: 3px 5px;
+}
