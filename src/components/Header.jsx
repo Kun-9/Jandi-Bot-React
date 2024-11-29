@@ -1,46 +1,72 @@
 import React, {useState, useRef} from 'react';
-import {Link} from "react-router-dom";
 import {useAuth} from "../providers/AuthProvider"
+import {Button, Container, Modal, Nav, Navbar} from "react-bootstrap";
+import {useNavigate, Link} from "react-router-dom";
 
 
 function Header() {
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
+    let navigate = useNavigate();
+    const [showModal, setShowModal] = useState(false);
+
+
+    function handleLogout() {
+        setShowModal(false);
+        logout()
+        navigate('/home')
+    }
 
     return (
-        <header>
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                <div className="container-fluid">
-                    <Link className="navbar-brand" to="/">Home</Link>
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-                            aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
+        <>
+            <Navbar expand="sm" bg="dark" variant="dark">
+                <Container fluid>
+                    <Link to="/" className="navbar-brand">Home</Link>
 
-                    <div className="navbar-collapse collapse" id={"navbarNav"}>
-                        <ul className="navbar-nav">
+                    <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+                    <Navbar.Collapse id="basic-navbar-nav">
+                        <Nav className="me-auto">
                             {user ? (
                                 <>
-                                    <li className="nav-item">
-                                        <Link className={"nav-link active"} to="/info">내 정보</Link>
-                                    </li>
+                                    {/*<Link to="/my-info" className="nav-link">MyInfo</Link>*/}
+                                    <Link to="/lottery" className="nav-link">Lottery</Link>
                                 </>
-                                ) : (
+                            ) : null}
+                        </Nav>
+
+                        <Nav>
+                            {user ? (
                                 <>
-                                    <li className="nav-item">
-                                        <Link className={"nav-link active"} to="/login">Login</Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <Link className={"nav-link active"} to="/register">Register</Link>
-                                    </li>
+                                    <Link to="/my-info" className="nav-link">{user.name}님</Link>
+                                    <Nav.Link onClick={() => setShowModal(true)}>
+                                        로그아웃
+                                    </Nav.Link>
+                                </>
+                            ) : (
+                                <>
+                                    <Link to="/signup" className="nav-link">Sign Up</Link>
+                                    <Link to="/login" className="nav-link">Login</Link>
                                 </>
                             )}
+                        </Nav>
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
 
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </header>
+            <Modal show={showModal} onHide={() => setShowModal(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>로그아웃 확인</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>로그아웃 하시겠습니까?</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowModal(false)}>
+                        취소
+                    </Button>
+                    <Button variant="primary" onClick={handleLogout}>
+                        확인
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </>
     );
 }
 

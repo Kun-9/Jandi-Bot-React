@@ -6,7 +6,12 @@ const AuthContext = createContext(null);
 
 
 export function AuthProvider({ children }) {
-    const [user, setUser] = useState(null);
+    // 초기값으로 저장되어있는 user 확인
+    const [user, setUser] = useState(() => {
+        const storedUser = localStorage.getItem("user");
+        return storedUser ? JSON.parse(storedUser) : null;
+    });
+
     const {isAuthenticated, isLoading} = useTokenAuth();
 
     const login = (userData) => {

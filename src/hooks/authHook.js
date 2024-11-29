@@ -1,5 +1,5 @@
 import {useState, useEffect} from "react";
-import {getRefreshToken, isTokenExpired} from "../utils/tokenUtil";
+import {getRefreshToken, isRefreshTokenExpired} from "../utils/tokenUtil";
 
 export const useAuth = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -8,7 +8,7 @@ export const useAuth = () => {
     useEffect(() => {
         const checkAuth = () => {
             const refreshToken = getRefreshToken();
-            setIsAuthenticated(!!refreshToken && !isTokenExpired(refreshToken));
+            setIsAuthenticated(!!refreshToken && !isRefreshTokenExpired(refreshToken));
             setIsLoading(false);
         };
 

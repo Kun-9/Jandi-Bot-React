@@ -15,7 +15,6 @@ export const saveAccessToken = (accessToken) => {
         if (!accessToken) {
             throw new Error('AccessToken을 받지 못했습니다.');
         }
-        localStorage.setItem('accessToken', accessToken);
 
         TOKEN_CONFIG.accessToken.storage
             .setItem(TOKEN_CONFIG.accessToken.key, accessToken);
@@ -54,6 +53,17 @@ export const getRefreshToken = () => {
     }
 }
 
+export const getAccessToken = () => {
+    try {
+        return TOKEN_CONFIG.accessToken.storage
+            .getItem(TOKEN_CONFIG.accessToken.key);
+
+    } catch (error) {
+        console.error("accessToken 조회에 실패했습니다.")
+        return null;
+    }
+}
+
 export const removeRefreshToken = () => {
     try {
         TOKEN_CONFIG.refreshToken.storage
@@ -78,11 +88,26 @@ export const removeAccessToken = () => {
     }
 }
 
-export const isTokenExpired = (refreshToken) => {
+export const isRefreshTokenExpired = (refreshToken) => {
     try {
         if (!refreshToken) return true;
 
         const tokenData = JSON.parse(atob(refreshToken.split('.')[1]));
+
+        const expirationTime = tokenData.exp * 1000;
+
+        return Date.now() >= expirationTime;
+    } catch (error) {
+        console.error("토큰 유효기간 체크 실패", error);
+        return true;
+    }
+}
+
+export const isAccessTokenExpired = (accessToken) => {
+    try {
+        if (!accessToken) return true;
+
+        const tokenData = JSON.parse(atob(accessToken.split('.')[1]));
 
         const expirationTime = tokenData.exp * 1000;
 
