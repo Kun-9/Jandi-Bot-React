@@ -55,15 +55,15 @@ function LoginForm({onSubmit}) {
                                   name={"password"}
                                   onChange={handleChange}
                                   value={formData.password}
-                                  placeholder={"비밀번호를 입력해세요."}
+                                  placeholder={"비밀번호를 입력해주세요."}
                                   required/>
                 </Form.Group>
                 <Form.Group className={"mb-3 form-check"} id={"rememberCheckBox"}>
-                    <Form.Check type={"checkbox"}
-                                value={formData.rememberMe}
-                                onChange={handleChange}
-                                label={"로그인 유지"}
-                    />
+                    {/*<Form.Check type={"checkbox"}*/}
+                    {/*            value={formData.rememberMe}*/}
+                    {/*            onChange={handleChange}*/}
+                    {/*            label={"로그인 유지"}*/}
+                    {/*/>*/}
                 </Form.Group>
 
                 <div className="d-grid gap-2">
@@ -75,8 +75,6 @@ function LoginForm({onSubmit}) {
                     </Button>
                 </div>
             </Form>
-
-
         </>
     );
 }

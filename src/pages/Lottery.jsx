@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import {deleteLottery, getLotteryWinner, lotteryList as getLotteryList} from '../service/apiService'
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-const API_BASE_URL = "http://localhost:8080/api";
+const API_BASE_URL = "http://knnn.me:8081/api";
 
 
 export default function Lottery() {

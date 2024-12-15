@@ -8,16 +8,24 @@ import {
     TOKEN_CONFIG,
     updateRefreshToken
 } from "../utils/tokenUtil";
-import {useState} from "react";
-import {wait} from "@testing-library/user-event/dist/utils";
 
 // const API_BASE_URL = "http://knnn.me:8081/api";
-const API_BASE_URL = "http://localhost:8080/api";
+const API_BASE_URL = "http://knnn.me:8081/api";
 
 const api = axios.create({
     baseURL: API_BASE_URL,
     withCredentials: true,
 })
+
+export const regist = async (credentials) => {
+    try {
+        const response = await api.post("/member/join")
+
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
 
 export const login = async (credentials) => {
     try {
